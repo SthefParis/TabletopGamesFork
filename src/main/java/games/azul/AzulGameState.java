@@ -3,17 +3,22 @@ package games.azul;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Component;
+import core.components.GridBoard;
 import games.GameType;
 
 import java.util.List;
 
 public class AzulGameState extends AbstractGameState {
 
+    GridBoard<AzulCell> grid;
+
     /**
      * @param gameParameters - game parameters.
      * @param nPlayers
      */
-    public AzulGameState(AbstractParameters gameParameters, int nPlayers) {super(gameParameters, nPlayers);}
+    public AzulGameState(AbstractParameters gameParameters, int nPlayers) {
+        super(gameParameters, nPlayers);
+    }
 
 
     @Override
