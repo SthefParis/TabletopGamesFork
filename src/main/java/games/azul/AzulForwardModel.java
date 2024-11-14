@@ -10,7 +10,7 @@ public class AzulForwardModel extends AbstractForwardModel {
     // Performs the initial game setup according to rules, initialising all components and variables in the given game state
     @Override
     protected void _setup(AbstractGameState firstState) {
-
+        AzulGameState gs = (AzulGameState) firstState;
     }
 
     // Applyy the given action to the given game state, execute any other non-action-dependent game rules
