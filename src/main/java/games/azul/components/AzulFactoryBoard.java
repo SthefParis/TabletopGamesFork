@@ -20,13 +20,11 @@ public class AzulFactoryBoard extends Component {
     }
 
     public void initialise(AzulGameState gs){
-//        int numOfTiles = ((AzulParameters) gs.getGameParameters()).getNTiles();
         this.factoryBoard = new HashMap<>();
 
         for (AzulTile tile : AzulTile.values()){
             factoryBoard.put(tile, defaultTileCount);
         }
-
     }
 
     @Override

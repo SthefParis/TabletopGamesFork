@@ -2,6 +2,8 @@ package games;
 
 import core.*;
 import core.rules.AbstractRuleBasedForwardModel;
+import games.azul.*;
+import games.azul.gui.AzulGUI;
 import games.battlelore.*;
 import games.battlelore.gui.BattleloreGUI;
 import games.blackjack.*;
@@ -214,7 +216,11 @@ public enum GameType {
     WarOfTheToads(2, 2,
             Arrays.asList(Strategy, Abstract, Cards),
             Collections.singletonList(TrickTaking),
-            ToadGameState.class, ToadForwardModel.class, ToadParameters.class, ToadGUIManager.class);
+            ToadGameState.class, ToadForwardModel.class, ToadParameters.class, ToadGUIManager.class),
+    Azul(1, 4,
+            Arrays.asList(Strategy, Abstract),
+            Arrays.asList(),
+            AzulGameState.class, AzulForwardModel.class, AzulParameters.class, AzulGUI.class);
 
 
     // Core classes where the game is defined

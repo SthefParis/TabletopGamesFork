@@ -44,13 +44,11 @@ public class AzulParameters extends AbstractParameters {
     // Penalty parameters
     int[] floorPenalties = {-1,-1,-2,-2,-2,-3,-3};
 
-    /**
-     * Constructor initializes the parameters based on the number of players.
-     * @param nPlayers Number of players in the game.
-     */
-    public AzulParameters(int nPlayers) {
-        this.nFactories = (nPlayers * 2) + 1;
-    }
+//    /**
+//     * Constructor initializes the parameters based on the number of players.
+//     * @param nPlayers Number of players in the game.
+//     */
+//    public AzulParameters() {}
 
     public int getBoardSize() { return boardSize; }
     public int getNTilesPerFactory(){ return nTilesPerFactory; }
@@ -63,9 +61,13 @@ public class AzulParameters extends AbstractParameters {
     public int[] getFloorPenalties() { return floorPenalties; }
     public int getNTiles() { return nTiles; }
 
+    public void initialise(int nPlayers){
+        this.nFactories = ((nPlayers)*2) + 1;
+    }
+
     @Override
     protected AbstractParameters _copy() {
-        AzulParameters copy = new AzulParameters(this.nFactories);
+        AzulParameters copy = new AzulParameters();
         copy.boardSize = this.boardSize;
         copy.nTilesPerFactory = this.nTilesPerFactory;
         copy.maxRounds = this.maxRounds;

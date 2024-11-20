@@ -3,6 +3,7 @@ package games.azul;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Component;
+import core.components.GridBoard;
 import core.interfaces.IGamePhase;
 import games.GameType;
 import games.azul.components.AzulFactoryBoard;
@@ -27,6 +28,7 @@ public class AzulGameState extends AbstractGameState {
         PrepNextRnd
     }
 
+    GridBoard<AzulFactoryBoard> board;
     List<AzulPlayerBoard> playerBoards;
     List<AzulFactoryBoard> factoryBoards;
 
@@ -43,14 +45,14 @@ public class AzulGameState extends AbstractGameState {
 
     public List<AzulFactoryBoard> getFactoryBoards() { return factoryBoards; }
     public AzulFactoryBoard getFactoryBoard(int factoryID) { return factoryBoards.get(factoryID); }
-
+    public GridBoard<AzulFactoryBoard> getBoard(){ return board; }
 //    public HashMap<AzulTile, Integer> getFactoryBoard(){ return factoryOffers; }
     /**
      * @return the enum value corresponding to this game, declared in {@link GameType}.
      */
     @Override
     protected GameType _getGameType() {
-        return GameType.GameTemplate;
+        return GameType.Azul;
     }
 
     /**

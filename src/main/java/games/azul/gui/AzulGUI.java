@@ -7,8 +7,10 @@ import games.azul.AzulGameState;
 import games.azul.components.AzulFactoryBoard;
 import gui.AbstractGUIManager;
 import gui.GamePanel;
+import gui.IScreenHighlight;
 import players.human.ActionController;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Set;
@@ -35,17 +37,26 @@ public class AzulGUI extends AbstractGUIManager {
         super(parent, game, ac, human);
         if (game == null) return;
 
-        // Set up GUI Layout
-        parent.setLayout(new BorderLayout());
-
         // Initialize Azul board view
         AzulGameState gs = (AzulGameState) game.getGameState();
         List<AzulFactoryBoard> factoryBoards = gs.getFactoryBoards();
-        boardView = new AzulBoardView(null, parent.getWidth(), parent.getHeight());
+
+        boardView = new AzulBoardView(this, gs);
         boardView.setPreferredSize(new Dimension(parent.getWidth(), 200));
 
-        // Add board view to center of the panel
-        parent.add(boardView, BorderLayout.CENTER);
+//        JPanel infoPanel = createGameStateInfoPanel("Azul", gs, width, defaultInfoPanelHeight);
+//        JComponent actionPanel = createActionPanel(new IScreenHighlight[]{boardView},
+//                width, defaultInfoPanelHeight, true);
+
+        // Set up GUI Layout
+        parent.setLayout(new BorderLayout());
+        parent.add(boardView, BorderLayout.CENTER);// Add board view to center of the panel
+//        parent.add(infoPanel, BorderLayout.NORTH);
+//        parent.add(actionPanel, BorderLayout.SOUTH);
+        parent.setPreferredSize(new Dimension(width, height + defaultActionPanelHeight + defaultInfoPanelHeight + defaultCardHeight + 20));
+        parent.revalidate();
+        parent.setVisible(true);
+        parent.repaint();
     }
 
     /**

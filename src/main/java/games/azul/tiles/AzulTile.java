@@ -14,6 +14,8 @@ public enum AzulTile {
         this.imagePath = imagePath;
     }
 
+//    public String getColor(){ return this.name(); }
+
     public String getImagePath() {
         return imagePath;
     }

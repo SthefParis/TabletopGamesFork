@@ -40,6 +40,8 @@ public class AzulForwardModel extends StandardForwardModel {
         gs.playerBoards = new ArrayList<>();
         gs.factoryBoards = new ArrayList<>();
 
+        params.initialise(gs.getNPlayers());
+
         for(int i=0; i < gs.getNPlayers(); i++){
             AzulPlayerBoard playerBoard = new AzulPlayerBoard();
             playerBoard.initialise(gs);
