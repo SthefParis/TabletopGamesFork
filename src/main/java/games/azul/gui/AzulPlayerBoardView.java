@@ -26,11 +26,8 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
     int offsetX = 50;
     int offsetY = 50;
 
-    int tempBoardOffsetX = 50; // Left side
-    int tempBoardOffsetY = 50;
+    int marginBetweenBoards = 50; // Space between the boards
 
-    int playerBoardOffsetX;    // Right side
-    int playerBoardOffsetY = 50;
 
     public AzulPlayerBoardView(GridBoard<AzulPlayerBoard> gridBoard, AzulGameState gs) {
         super(gridBoard, 0, 0);
@@ -62,8 +59,26 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
     protected void paintComponent(Graphics g1) {
         Graphics2D g = (Graphics2D) g1;
 
-        drawPlayerTempBoard(g, (GridBoard<AzulPlayerBoard>) component, offsetX, offsetY);
-//        drawPlayerBoard(g, (GridBoard<AzulPlayerBoard>) component, offsetX, offsetY);
+        GridBoard<AzulPlayerBoard> gridBoard = (GridBoard<AzulPlayerBoard>) component;
+
+        // Calculate individual board dimensions
+        int boardWidth = gridBoard.getWidth() * GUI.defaultItemSize;
+        int boardHeight = gridBoard.getHeight() * GUI.defaultItemSize;
+
+        // Calculate combined width of the two boards and center position
+        int combinedWidth = boardWidth * 2 + marginBetweenBoards;
+        int startX = (this.getWidth() - combinedWidth) / 2;
+        int centerY = (this.getHeight() - boardHeight) / 2;
+
+        // Calculate positions for each board
+        int tempBoardOffsetX = startX;
+        int playerBoardOffsetX = startX + boardWidth + marginBetweenBoards;
+
+        // Draw the temporary board (left)
+        drawPlayerTempBoard(g, gridBoard, tempBoardOffsetX, centerY);
+
+        // Draw the main player board (right)
+        drawPlayerBoard(g, gridBoard, playerBoardOffsetX, centerY);
 
         if (highlight.size() > 0){
             g.setColor(Color.green);
@@ -80,10 +95,10 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
     private void drawPlayerBoard(Graphics2D g, GridBoard<AzulPlayerBoard> gridBoard, int x, int y) {
 
         // Draw cells
-        for (int i=0; i < gridBoard.getHeight(); i++){
-            for (int j=0; j < gridBoard.getWidth(); j++){
-                int xC = x + j * defaultItemSize;
-                int yC = y + i * defaultItemSize;
+        for (int i = 0; i < gridBoard.getHeight(); i++) {
+            for (int j = 0; j < gridBoard.getWidth(); j++) {
+                int xC = x + j * GUI.defaultItemSize;
+                int yC = y + i * GUI.defaultItemSize;
                 drawCell(g, gridBoard.getElement(j, i), xC, yC);
 
                 // Save rect where cell is drawn
@@ -101,7 +116,7 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
             // Calculate the starting x-coordinate for the current row (right-aligned)
             int startX = x + (gridBoard.getHeight() - 1 - i) * GUI.defaultItemSize;
 
-            for (int j = 0; j <= i; j++) { // Temp board rows have variable widths
+            for (int j = 0; j <= i; j++) {
                 int xC = startX + j * GUI.defaultItemSize; // Position cells from right to left
                 int yC = y + i * GUI.defaultItemSize;      // Row positioning
                 drawCell(g, gridBoard.getElement(j, i), xC, yC);

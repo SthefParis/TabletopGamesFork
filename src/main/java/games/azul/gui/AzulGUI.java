@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public class AzulGUI extends AbstractGUIManager {
 
-//    private AzulFactoryBoardView factoryBoardView;
+    //    private AzulFactoryBoardView factoryBoardView;
     private AzulPlayerBoardView playerBoardView;
 
     public AzulGUI(GamePanel parent, Game game, ActionController ac, Set<Integer> human) {
