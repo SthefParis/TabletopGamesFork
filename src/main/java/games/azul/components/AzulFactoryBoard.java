@@ -3,13 +3,15 @@ package games.azul.components;
 import core.CoreConstants;
 import core.components.Component;
 import games.azul.AzulGameState;
+import games.azul.AzulParameters;
 import games.azul.tiles.AzulTile;
 
 import java.util.HashMap;
 
 public class AzulFactoryBoard extends Component {
-    public HashMap<AzulTile, Integer> factoryBoard;
-    int defaultTileCount = 0;
+    //public HashMap<AzulTile, Integer> factoryBoard;
+    //    int defaultTileCount = 0;
+    public int[][] factoryBoard;
 
     public AzulFactoryBoard() {
         super(CoreConstants.ComponentType.BOARD, "AzulFactoryBoard");
@@ -20,11 +22,30 @@ public class AzulFactoryBoard extends Component {
     }
 
     public void initialise(AzulGameState gs){
-        this.factoryBoard = new HashMap<>();
+        this.factoryBoard = new int[5][2];
+        int count = 0;
 
-        for (AzulTile tile : AzulTile.values()){
-            factoryBoard.put(tile, defaultTileCount);
-        }
+    this.factoryBoard = new int[][]{{0,2}, {1,2}, {2,0},{3,0},{4,0}};
+
+//        for (int i=0; i<factoryBoard.length; i++){
+//            this.factoryBoard = new int[i][defaultTileCount];
+//        }
+
+//        for (AzulTile tile : AzulTile.values()){
+//            if (count < 1){
+//                factoryBoard.put(tile, 1);
+//                count+=1;
+//            }
+//            else{
+//                factoryBoard.put(tile, defaultTileCount);
+//            }
+//
+//            System.out.println("Tile: " + tile + " Value: " + factoryBoard.values());
+//        }
+//        int nTiles = ((AzulParameters) gs.getGameParameters()).getNTiles();
+//        //for (int i=0; i<nTiles; i++){
+//            this.factoryBoard = new HashMap<>();
+//        //}
     }
 
     @Override

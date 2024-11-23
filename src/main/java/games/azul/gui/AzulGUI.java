@@ -3,16 +3,14 @@ package games.azul.gui;
 import core.AbstractGameState;
 import core.AbstractPlayer;
 import core.Game;
+import core.components.GridBoard;
 import games.azul.AzulGameState;
 import games.azul.components.AzulFactoryBoard;
 import gui.AbstractGUIManager;
 import gui.GamePanel;
-import gui.IScreenHighlight;
 import players.human.ActionController;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,7 +29,7 @@ import java.util.Set;
  */
 public class AzulGUI extends AbstractGUIManager {
 
-    private AzulBoardView boardView;
+    private AzulFactoryBoardView boardView;
 
     public AzulGUI(GamePanel parent, Game game, ActionController ac, Set<Integer> human) {
         super(parent, game, ac, human);
@@ -39,9 +37,9 @@ public class AzulGUI extends AbstractGUIManager {
 
         // Initialize Azul board view
         AzulGameState gs = (AzulGameState) game.getGameState();
-        List<AzulFactoryBoard> factoryBoards = gs.getFactoryBoards();
+        GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
 
-        boardView = new AzulBoardView(this, gs);
+        boardView = new AzulFactoryBoardView(gs.getFactoryBoard(), gs);
         boardView.setPreferredSize(new Dimension(parent.getWidth(), 200));
 
 //        JPanel infoPanel = createGameStateInfoPanel("Azul", gs, width, defaultInfoPanelHeight);
@@ -83,7 +81,7 @@ public class AzulGUI extends AbstractGUIManager {
             AzulGameState gs = (AzulGameState) gameState;
 
             // Update the board view with the latest factory boards
-            List<AzulFactoryBoard> factoryBoards = gs.getFactoryBoards();
+            GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
             boardView.repaint();
         }
     }

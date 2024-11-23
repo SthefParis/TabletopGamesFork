@@ -8,8 +8,11 @@ import core.interfaces.IGamePhase;
 import games.GameType;
 import games.azul.components.AzulFactoryBoard;
 import games.azul.components.AzulPlayerBoard;
+import games.azul.tiles.AzulTile;
+import tech.tablesaw.plotly.components.Grid;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,7 +33,7 @@ public class AzulGameState extends AbstractGameState {
 
     GridBoard<AzulFactoryBoard> board;
     List<AzulPlayerBoard> playerBoards;
-    List<AzulFactoryBoard> factoryBoards;
+    GridBoard<AzulFactoryBoard> factoryBoards;
 
     /**
      * @param gameParameters - game parameters.
@@ -43,10 +46,10 @@ public class AzulGameState extends AbstractGameState {
     public List<AzulPlayerBoard> getPlayerBoards() { return playerBoards; }
     public AzulPlayerBoard getPlayerBoard(int playerID) { return playerBoards.get(playerID); }
 
-    public List<AzulFactoryBoard> getFactoryBoards() { return factoryBoards; }
-    public AzulFactoryBoard getFactoryBoard(int factoryID) { return factoryBoards.get(factoryID); }
-    public GridBoard<AzulFactoryBoard> getBoard(){ return board; }
-//    public HashMap<AzulTile, Integer> getFactoryBoard(){ return factoryOffers; }
+//    public List<AzulFactoryBoard> getFactoryBoards() { return factoryBoards; }
+    public GridBoard<AzulFactoryBoard> getFactoryBoard() { return factoryBoards; }
+//    public GridBoard<AzulFactoryBoard> getBoard(){ return board; }
+//    public HashMap<AzulTile, Integer> getFactoryBoard(int factoryID){ return factoryBoards.get(factoryID).factoryBoard; }
     /**
      * @return the enum value corresponding to this game, declared in {@link GameType}.
      */

@@ -20,6 +20,8 @@ import java.util.HashMap;
 public class AzulParameters extends AbstractParameters {
     // Board and factory parameters
     int boardSize = 5;
+    int factoryBoardHeight = 1;
+    int factoryBoardWidth;
     int nTilesPerFactory = 4;
     int nFactories;
     int maxRounds = 5;
@@ -63,6 +65,7 @@ public class AzulParameters extends AbstractParameters {
 
     public void initialise(int nPlayers){
         this.nFactories = ((nPlayers)*2) + 1;
+        this.factoryBoardWidth = this.nFactories * this.nTilesPerFactory;
     }
 
     @Override

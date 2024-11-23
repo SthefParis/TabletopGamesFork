@@ -3,6 +3,7 @@ package games.azul;
 import core.AbstractGameState;
 import core.StandardForwardModel;
 import core.actions.AbstractAction;
+import core.components.GridBoard;
 import games.azul.components.AzulFactoryBoard;
 import games.azul.components.AzulPlayerBoard;
 import gametemplate.actions.GTAction;
@@ -38,7 +39,7 @@ public class AzulForwardModel extends StandardForwardModel {
         AzulParameters params = (AzulParameters) firstState.getGameParameters();
 
         gs.playerBoards = new ArrayList<>();
-        gs.factoryBoards = new ArrayList<>();
+        gs.factoryBoards = new GridBoard<>(params.factoryBoardWidth, params.factoryBoardHeight);
 
         params.initialise(gs.getNPlayers());
 
@@ -53,7 +54,7 @@ public class AzulForwardModel extends StandardForwardModel {
             AzulFactoryBoard factoryBoard = new AzulFactoryBoard();
             factoryBoard.initialise(gs);
 
-            gs.factoryBoards.add(factoryBoard);
+//            gs.factoryBoards.add(factoryBoard);
         }
     }
 
