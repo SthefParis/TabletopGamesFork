@@ -6,6 +6,7 @@ import core.Game;
 import core.components.GridBoard;
 import games.azul.AzulGameState;
 import games.azul.components.AzulFactoryBoard;
+import games.azul.components.AzulPlayerBoard;
 import gui.AbstractGUIManager;
 import gui.GamePanel;
 import players.human.ActionController;
@@ -29,18 +30,23 @@ import java.util.Set;
  */
 public class AzulGUI extends AbstractGUIManager {
 
-    private AzulFactoryBoardView boardView;
+//    private AzulFactoryBoardView factoryBoardView;
+    private AzulPlayerBoardView playerBoardView;
 
     public AzulGUI(GamePanel parent, Game game, ActionController ac, Set<Integer> human) {
         super(parent, game, ac, human);
         if (game == null) return;
 
-        // Initialize Azul board view
         AzulGameState gs = (AzulGameState) game.getGameState();
-        GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
 
-        boardView = new AzulFactoryBoardView(gs.getFactoryBoard(), gs);
-        boardView.setPreferredSize(new Dimension(parent.getWidth(), 200));
+//        // Initialize Azul factory board view
+//        GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
+//        factoryBoardView = new AzulFactoryBoardView(gs.getFactoryBoard(), gs);
+////        factoryBoardView.setPreferredSize(new Dimension(parent.getWidth(), 200));
+
+        // Initialize Azul player board view
+        GridBoard<AzulPlayerBoard> playerBoards = gs.getPlayerBoard();
+        playerBoardView = new AzulPlayerBoardView(gs.getPlayerBoard(), gs);
 
 //        JPanel infoPanel = createGameStateInfoPanel("Azul", gs, width, defaultInfoPanelHeight);
 //        JComponent actionPanel = createActionPanel(new IScreenHighlight[]{boardView},
@@ -48,7 +54,8 @@ public class AzulGUI extends AbstractGUIManager {
 
         // Set up GUI Layout
         parent.setLayout(new BorderLayout());
-        parent.add(boardView, BorderLayout.CENTER);// Add board view to center of the panel
+//        parent.add(factoryBoardView, BorderLayout.CENTER);// Add board view to center of the panel
+        parent.add(playerBoardView, BorderLayout.CENTER);
 //        parent.add(infoPanel, BorderLayout.NORTH);
 //        parent.add(actionPanel, BorderLayout.SOUTH);
         parent.setPreferredSize(new Dimension(width, height + defaultActionPanelHeight + defaultInfoPanelHeight + defaultCardHeight + 20));
@@ -82,7 +89,8 @@ public class AzulGUI extends AbstractGUIManager {
 
             // Update the board view with the latest factory boards
             GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
-            boardView.repaint();
+//            factoryBoardView.repaint();
+            playerBoardView.repaint();
         }
     }
 }

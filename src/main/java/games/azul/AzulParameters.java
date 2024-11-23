@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class AzulParameters extends AbstractParameters {
     // Board and factory parameters
-    int boardSize = 5;
+    int playerBoardSize = 5;
     int factoryBoardHeight = 1;
     int factoryBoardWidth;
     int nTilesPerFactory = 4;
@@ -52,7 +52,7 @@ public class AzulParameters extends AbstractParameters {
 //     */
 //    public AzulParameters() {}
 
-    public int getBoardSize() { return boardSize; }
+    public int getBoardSize() { return playerBoardSize; }
     public int getNTilesPerFactory(){ return nTilesPerFactory; }
     public int getNFactories() { return nFactories; }
     public int getMaxRounds() { return maxRounds; }
@@ -71,7 +71,7 @@ public class AzulParameters extends AbstractParameters {
     @Override
     protected AbstractParameters _copy() {
         AzulParameters copy = new AzulParameters();
-        copy.boardSize = this.boardSize;
+        copy.playerBoardSize = this.playerBoardSize;
         copy.nTilesPerFactory = this.nTilesPerFactory;
         copy.maxRounds = this.maxRounds;
         copy.maxPoints = this.maxPoints;

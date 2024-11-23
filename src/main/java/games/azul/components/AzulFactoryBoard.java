@@ -5,6 +5,7 @@ import core.components.Component;
 import games.azul.AzulGameState;
 import games.azul.AzulParameters;
 import games.azul.tiles.AzulTile;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.HashMap;
 
@@ -25,8 +26,7 @@ public class AzulFactoryBoard extends Component {
         this.factoryBoard = new int[5][2];
         int count = 0;
 
-    this.factoryBoard = new int[][]{{0,2}, {1,2}, {2,0},{3,0},{4,0}};
-
+        this.factoryBoard = new int[][]{{0,2}, {1,2}, {2,0},{3,0},{4,0}};
 //        for (int i=0; i<factoryBoard.length; i++){
 //            this.factoryBoard = new int[i][defaultTileCount];
 //        }

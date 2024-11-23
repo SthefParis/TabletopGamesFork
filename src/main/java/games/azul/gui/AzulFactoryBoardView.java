@@ -53,8 +53,6 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
     protected void paintComponent(Graphics g1){
         Graphics2D g = (Graphics2D) g1;
 
-        // Calculate offsets to center the board
-
         drawFactoryBoard(g, (GridBoard<AzulFactoryBoard>) component, offsetX, offsetY);
 
         if (highlight.size() > 0){
@@ -86,15 +84,6 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
                 }
             }
         }
-
-//        for (int i=0; i<8; i++){
-//            drawCell(g, startX, startY);
-//            startX += tileSize;
-//
-//            // Save rect where cell is drawn
-//            rects.put(new Rectangle(startX - defaultItemSize/2, startY - defaultItemSize/2, defaultItemSize, defaultItemSize), "color");
-//        }
-//        return new Rectangle(x, y, 50, startY);
     }
 
     private void drawCell(Graphics2D g, AzulFactoryBoard element, int x, int y){
@@ -115,6 +104,9 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
             g.setFont(new Font(f.getName(), Font.BOLD, defaultItemSize * 3 / 2));
             g.drawString(element.toString(), x + defaultItemSize / 16, y + defaultItemSize - defaultItemSize / 16);
             g.setFont(f);
+        }
+        else{
+            g.drawString("Empty", x + defaultItemSize / 16, y + defaultItemSize - defaultItemSize / 16 );
         }
     }
 

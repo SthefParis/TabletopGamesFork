@@ -31,8 +31,7 @@ public class AzulGameState extends AbstractGameState {
         PrepNextRnd
     }
 
-    GridBoard<AzulFactoryBoard> board;
-    List<AzulPlayerBoard> playerBoards;
+    GridBoard<AzulPlayerBoard> playerBoards;
     GridBoard<AzulFactoryBoard> factoryBoards;
 
     /**
@@ -43,8 +42,8 @@ public class AzulGameState extends AbstractGameState {
         super(gameParameters, nPlayers);
     }
 
-    public List<AzulPlayerBoard> getPlayerBoards() { return playerBoards; }
-    public AzulPlayerBoard getPlayerBoard(int playerID) { return playerBoards.get(playerID); }
+    public GridBoard<AzulPlayerBoard> getPlayerBoard() { return playerBoards; }
+//    public AzulPlayerBoard getPlayerBoards(int playerID) { return playerBoards.get(playerID); }
 
 //    public List<AzulFactoryBoard> getFactoryBoards() { return factoryBoards; }
     public GridBoard<AzulFactoryBoard> getFactoryBoard() { return factoryBoards; }
@@ -67,7 +66,7 @@ public class AzulGameState extends AbstractGameState {
     @Override
     protected List<Component> _getAllComponents() {
         return new ArrayList<Component>() {{
-
+//            add(factoryBoards);
         }};
     }
 

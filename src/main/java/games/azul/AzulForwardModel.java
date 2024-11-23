@@ -38,7 +38,7 @@ public class AzulForwardModel extends StandardForwardModel {
         AzulGameState gs = (AzulGameState) firstState;
         AzulParameters params = (AzulParameters) firstState.getGameParameters();
 
-        gs.playerBoards = new ArrayList<>();
+        gs.playerBoards = new GridBoard<>(params.playerBoardSize, params.playerBoardSize);
         gs.factoryBoards = new GridBoard<>(params.factoryBoardWidth, params.factoryBoardHeight);
 
         params.initialise(gs.getNPlayers());
@@ -47,12 +47,19 @@ public class AzulForwardModel extends StandardForwardModel {
             AzulPlayerBoard playerBoard = new AzulPlayerBoard();
             playerBoard.initialise(gs);
 
-            gs.playerBoards.add(playerBoard);
+//            gs.playerBoards.add(playerBoard); //USED FOR LIST!!
         }
 
         for(int i=0; i < params.nFactories; i++){
             AzulFactoryBoard factoryBoard = new AzulFactoryBoard();
             factoryBoard.initialise(gs);
+
+//            for (int x=0; x < gs.factoryBoards.getHeight(); x++){
+//                for (int j=0; j < gs.factoryBoards.getWidth(); j++){
+//                    gs.factoryBoards.setElement(j, x);
+//                }
+//            }
+//            gs.getFactoryBoard().setElement()
 
 //            gs.factoryBoards.add(factoryBoard);
         }
