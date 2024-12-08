@@ -15,8 +15,8 @@ import games.azul.tiles.AzulTile;
  * <p>They <b>may</b> keep references to other components or actions (but these should be deep-copied in the copy() method, watch out for infinite loops!).</p>
  */
 public class AzulPlayerBoard extends Component {
-    AzulTile[][] playerBoard; // Refers to Wall
-    AzulTile[][] playerTempBoard; // Refers to Pattern Lines
+    public AzulTile[][] playerBoard; // Refers to Wall
+    public AzulTile[][] playerTempBoard; // Refers to Pattern Lines
 
     public AzulPlayerBoard() {
         super(CoreConstants.ComponentType.BOARD, "AzulPlayerBoard");

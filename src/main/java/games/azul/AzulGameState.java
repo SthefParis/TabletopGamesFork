@@ -3,16 +3,12 @@ package games.azul;
 import core.AbstractGameState;
 import core.AbstractParameters;
 import core.components.Component;
-import core.components.GridBoard;
 import core.interfaces.IGamePhase;
 import games.GameType;
 import games.azul.components.AzulFactoryBoard;
 import games.azul.components.AzulPlayerBoard;
-import games.azul.tiles.AzulTile;
-import tech.tablesaw.plotly.components.Grid;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,8 +27,9 @@ public class AzulGameState extends AbstractGameState {
         PrepNextRnd
     }
 
-    GridBoard<AzulPlayerBoard> playerBoards;
-    GridBoard<AzulFactoryBoard> factoryBoards;
+//    GridBoard<AzulPlayerBoard> playerBoards;
+    List<AzulFactoryBoard> factoryBoards;
+    List<AzulPlayerBoard> playerBoards;
 
     /**
      * @param gameParameters - game parameters.
@@ -42,11 +39,11 @@ public class AzulGameState extends AbstractGameState {
         super(gameParameters, nPlayers);
     }
 
-    public GridBoard<AzulPlayerBoard> getPlayerBoard() { return playerBoards; }
-//    public AzulPlayerBoard getPlayerBoards(int playerID) { return playerBoards.get(playerID); }
+    public List<AzulPlayerBoard> getPlayerBoards() { return playerBoards; }
+    public AzulPlayerBoard getPlayerBoard(int playerID) { return playerBoards.get(playerID); }
 
-//    public List<AzulFactoryBoard> getFactoryBoards() { return factoryBoards; }
-    public GridBoard<AzulFactoryBoard> getFactoryBoard() { return factoryBoards; }
+    public List<AzulFactoryBoard> getFactoryBoards() { return factoryBoards; }
+    public AzulFactoryBoard getFactoryBoard(int factoryId) { return factoryBoards.get(factoryId); }
 //    public GridBoard<AzulFactoryBoard> getBoard(){ return board; }
 //    public HashMap<AzulTile, Integer> getFactoryBoard(int factoryID){ return factoryBoards.get(factoryID).factoryBoard; }
     /**
@@ -91,7 +88,7 @@ public class AzulGameState extends AbstractGameState {
     protected AzulGameState _copy(int playerId) {
         AzulGameState copy = new AzulGameState(gameParameters, getNPlayers());
         //for (GridBoard<AzulTile> board : playerBoards) {
-        copy.playerBoards = playerBoards; // Do i need the copy at the end?
+//        copy.playerBoards = playerBoards; // Do i need the copy at the end?
         //}
 //        copy.factoryOffers = factoryOffers;
 

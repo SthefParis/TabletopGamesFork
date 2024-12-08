@@ -38,31 +38,32 @@ public class AzulForwardModel extends StandardForwardModel {
         AzulGameState gs = (AzulGameState) firstState;
         AzulParameters params = (AzulParameters) firstState.getGameParameters();
 
-        gs.playerBoards = new GridBoard<>(params.playerBoardSize, params.playerBoardSize);
-        gs.factoryBoards = new GridBoard<>(params.factoryBoardWidth, params.factoryBoardHeight);
-
+        // Initialise Player boards
+        gs.playerBoards = new ArrayList<>();
         params.initialise(gs.getNPlayers());
 
         for(int i=0; i < gs.getNPlayers(); i++){
             AzulPlayerBoard playerBoard = new AzulPlayerBoard();
             playerBoard.initialise(gs);
-
-//            gs.playerBoards.add(playerBoard); //USED FOR LIST!!
+            playerBoard.setOwnerId(i);
+            gs.playerBoards.add(playerBoard);
         }
 
-        for(int i=0; i < params.nFactories; i++){
+        // Choose a random player to be first
+        int startingPlayer = (int) (Math.random() * gs.getNPlayers());
+
+        // Initialise and fill factory boards
+        gs.factoryBoards = new ArrayList<>();
+
+        for (int y=0; y< params.nFactories; y++) {
             AzulFactoryBoard factoryBoard = new AzulFactoryBoard();
             factoryBoard.initialise(gs);
-
-//            for (int x=0; x < gs.factoryBoards.getHeight(); x++){
-//                for (int j=0; j < gs.factoryBoards.getWidth(); j++){
-//                    gs.factoryBoards.setElement(j, x);
-//                }
-//            }
-//            gs.getFactoryBoard().setElement()
-
-//            gs.factoryBoards.add(factoryBoard);
+            factoryBoard.refill();
+            gs.factoryBoards.add(factoryBoard);
         }
+
+
+
     }
 
     /**

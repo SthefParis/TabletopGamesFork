@@ -3,16 +3,22 @@ package games.azul.gui;
 import core.AbstractGameState;
 import core.AbstractPlayer;
 import core.Game;
-import core.components.GridBoard;
 import games.azul.AzulGameState;
+import games.azul.AzulParameters;
 import games.azul.components.AzulFactoryBoard;
-import games.azul.components.AzulPlayerBoard;
 import gui.AbstractGUIManager;
 import gui.GamePanel;
+import gui.IScreenHighlight;
 import players.human.ActionController;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.List;
 
 /**
  * <p>This class allows the visualisation of the game. The game components (accessible through {@link Game#getGameState()}
@@ -30,35 +36,108 @@ import java.util.Set;
  */
 public class AzulGUI extends AbstractGUIManager {
 
-    //    private AzulFactoryBoardView factoryBoardView;
-    private AzulPlayerBoardView playerBoardView;
+    // Settings for display areas
+    final static int playerAreaWidth = 500;
+    final static int playerAreaHeight = 200;
+
+    // Factory board views
+    private List<AzulFactoryBoardView> factoryBoards;
+    // List of player board views
+    private List<AzulPlayerBoardView> playerBoards;
+
+    // Current active player
+    private int activePlayer = -1;
+    // Border highlight of active player
+    Border highlightActive = BorderFactory.createLineBorder(new Color(220, 169, 11), 3);
+    Border[] playerViewBorders;
 
     public AzulGUI(GamePanel parent, Game game, ActionController ac, Set<Integer> human) {
         super(parent, game, ac, human);
         if (game == null) return;
+        AbstractGameState gs = game.getGameState();
+        if (gs == null) return;
 
-        AzulGameState gs = (AzulGameState) game.getGameState();
+        activePlayer = gs.getCurrentPlayer();
 
-//        // Initialize Azul factory board view
-//        GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
-//        factoryBoardView = new AzulFactoryBoardView(gs.getFactoryBoard(), gs);
-////        factoryBoardView.setPreferredSize(new Dimension(parent.getWidth(), 200));
+        // Find required size of window
+        int nPlayers = gs.getNPlayers();
+        int nHorizAreas = 1 + (nPlayers <= 3 ? 2 : 3);
+        double nVertAreas = 5;
+        this.width = playerAreaWidth * nHorizAreas;
+        this.height = (int) (playerAreaHeight * nVertAreas) + 20;
 
-        // Initialize Azul player board view
-        GridBoard<AzulPlayerBoard> playerBoards = gs.getPlayerBoard();
-        playerBoardView = new AzulPlayerBoardView(gs.getPlayerBoard(), gs);
+        AzulGameState ags = (AzulGameState) gs;
+        AzulParameters params = (AzulParameters) gs.getGameParameters();
 
-//        JPanel infoPanel = createGameStateInfoPanel("Azul", gs, width, defaultInfoPanelHeight);
-//        JComponent actionPanel = createActionPanel(new IScreenHighlight[]{boardView},
-//                width, defaultInfoPanelHeight, true);
+        // Create main game area that will hold all game views
+        factoryBoards = new ArrayList<>();
+        playerBoards = new ArrayList<>();
+        playerViewBorders = new Border[nPlayers];
+        JPanel mainGameArea = new JPanel();
+        mainGameArea.setLayout(new BorderLayout());
 
-        // Set up GUI Layout
+        //Player boards go on the edges
+        String[] locations = new String[]{BorderLayout.NORTH, BorderLayout.EAST, BorderLayout.SOUTH, BorderLayout.WEST};
+        JPanel[] sides = new JPanel[]{new JPanel(), new JPanel(), new JPanel(), new JPanel()};
+        int next = 0;
+        for (int i = 0; i < nPlayers; i++) {
+            AzulPlayerBoardView playerBoard = new AzulPlayerBoardView(ags.getPlayerBoard(i), ags);
+
+            // Get agent name
+            String[] split = game.getPlayers().get(0).getClass().toString().split("\\.");
+            String agentName = split[split.length - 1];
+
+            // Create border, layouts and keep track of this view
+            TitledBorder title = BorderFactory.createTitledBorder(
+                    BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Player " + i + " [" + agentName + "]",
+                    TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM
+            );
+
+            playerViewBorders[i] = title;
+            playerBoard.setBorder(title);
+            playerBoard.setPreferredSize(new Dimension(playerAreaWidth, playerAreaHeight));
+            sides[next].setLayout(new BoxLayout(sides[next], BoxLayout.Y_AXIS));
+            sides[next].add(playerBoard);
+            next = (next + 1) % (locations.length);
+            playerBoards.add(playerBoard);
+        }
+        for (int i = 0; i < locations.length; i++) {
+            mainGameArea.add(sides[i], locations[i]);
+        }
+
+        // Factory in the center
+        for(int i = 0; i < params.getNFactories(); i++){
+            AzulFactoryBoardView factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoard(i), ags);
+
+
+            factoryBoards.add(factoryBoard);
+
+        }
+
+        JPanel centerArea = new JPanel();
+        centerArea.setLayout(new BoxLayout(centerArea, BoxLayout.Y_AXIS));
+
+        for (int i=0; i < params.getNFactories(); i++) {
+            centerArea.add(factoryBoards.get(i));
+        }
+////        factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoards(),ags);
+//        centerArea.add(factoryBoard);
+////        JPanel jp = new JPanel();
+//////        jp.setLayout(new GridBagLayout());
+//////        jp.add(centerArea);
+        mainGameArea.add(centerArea, BorderLayout.CENTER);
+
+        // Top area will show state information
+        JPanel infoPanel = createGameStateInfoPanel("Azul", gs, width, defaultInfoPanelHeight);
+        // Bottom area will show actions available
+        JComponent actionPanel = createActionPanel(new IScreenHighlight[0], width, defaultActionPanelHeight, false, true, null, null, null);
+
+        // Add all views to frame
         parent.setLayout(new BorderLayout());
-//        parent.add(factoryBoardView, BorderLayout.CENTER);// Add board view to center of the panel
-        parent.add(playerBoardView, BorderLayout.CENTER);
-//        parent.add(infoPanel, BorderLayout.NORTH);
-//        parent.add(actionPanel, BorderLayout.SOUTH);
-        parent.setPreferredSize(new Dimension(width, height + defaultActionPanelHeight + defaultInfoPanelHeight + defaultCardHeight + 20));
+        parent.add(mainGameArea, BorderLayout.CENTER);
+        parent.add(infoPanel, BorderLayout.NORTH);
+        parent.add(actionPanel, BorderLayout.SOUTH);
+
         parent.revalidate();
         parent.setVisible(true);
         parent.repaint();
@@ -80,17 +159,57 @@ public class AzulGUI extends AbstractGUIManager {
      * Updates all GUI elements given current game state and player that is currently acting.
      *
      * @param player    - current player acting.
-     * @param gameState - current game state to be used in updating visuals.
+     * @param gs - current game state to be used in updating visuals.
      */
     @Override
-    protected void _update(AbstractPlayer player, AbstractGameState gameState) {
-        if (gameState instanceof AzulGameState) {
-            AzulGameState gs = (AzulGameState) gameState;
+    protected void _update(AbstractPlayer player, AbstractGameState gs) {
+        if (gs == null) return;
 
-            // Update the board view with the latest factory boards
-            GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
-//            factoryBoardView.repaint();
-            playerBoardView.repaint();
+        if (gs.getCurrentPlayer() != activePlayer) {
+            activePlayer = gs.getCurrentPlayer();
         }
+
+        // Update boards and visibility
+        AzulGameState ags = (AzulGameState) gs;
+        for (int i=0; i< gs.getNPlayers(); i++) {
+            playerBoards.get(i).updateComponent(ags.getPlayerBoard(i));
+            if (i == gs.getCurrentPlayer() && gs.getCoreGameParameters().alwaysDisplayCurrentPlayer
+                    || humanPlayerId.contains(i)
+                    || gs.getCoreGameParameters().alwaysDisplayFullObservable) {
+//                playerBoards.get(i).setFont(true);
+                playerBoards.get(i).setFocusable(true);
+            }
+
+            // Highlight active player
+            if (i == gs.getCurrentPlayer()) {
+                Border compound = BorderFactory.createCompoundBorder(
+                        highlightActive, playerViewBorders[i]);
+                playerBoards.get(i).setBorder(compound);
+            }
+            else{
+                playerBoards.get(i).setBorder(playerViewBorders[i]);
+            }
+//            factoryBoard.updateComponent(ags.getFactoryBoards());
+//            factoryBoard.setFocusable(true);
+        }
+
+//        if (gameState instanceof AzulGameState) {
+//            AzulGameState gs = (AzulGameState) gs;
+//
+//            // Update the board view with the latest factory boards
+////            GridBoard<AzulFactoryBoard> factoryBoards = gs.getFactoryBoard();
+////            factoryBoardView.repaint();
+////            playerBoardView.repaint();
+//        }
+//        if (gs == null) return;
+//
+//        AzulGameState ags = (AzulGameState) gs;
+
+//        playerBoardView.repaint();
+//        for (int i=0; i < gs.getNPlayers(); i++) {
+//            playerBoards.get(i).updateComponent(ags.getPlayerBoard(i));
+//        }
+//        factoryBoard.repaint();
+
     }
 }

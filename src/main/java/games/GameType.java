@@ -217,7 +217,7 @@ public enum GameType {
             Arrays.asList(Strategy, Abstract, Cards),
             Collections.singletonList(TrickTaking),
             ToadGameState.class, ToadForwardModel.class, ToadParameters.class, ToadGUIManager.class),
-    Azul(1, 4,
+    Azul(2, 4,
             Arrays.asList(Strategy, Abstract),
             Arrays.asList(),
             AzulGameState.class, AzulForwardModel.class, AzulParameters.class, AzulGUI.class);

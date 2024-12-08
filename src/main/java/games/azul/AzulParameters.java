@@ -29,7 +29,7 @@ public class AzulParameters extends AbstractParameters {
     int nTiles = 5;
 
     // Tile counts by colour
-    HashMap<AzulTile, Integer> tileCounts = new HashMap<AzulTile, Integer>() {{
+    public HashMap<AzulTile, Integer> tileCounts = new HashMap<AzulTile, Integer>() {{
         put(AzulTile.White, 20);
         put(AzulTile.Orange, 20);
         put(AzulTile.Red, 20);

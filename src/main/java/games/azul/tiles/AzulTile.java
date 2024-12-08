@@ -2,21 +2,28 @@ package games.azul.tiles;
 
 // This script refers to the tiles
 public enum AzulTile {
-    White,
-    Black("data/azul/images/tiles/Black.jpg"),
-    Red("data/azul/images/tiles/Red.jpg"),
-    Orange("data/azul/images/tiles/Orange.jpg"),
-    Blue("data/azul/images/tiles/Blue.jpg");
+    White(0),
+    Black(1, "data/azul/images/tiles/Black.jpg"),
+    Red(2, "data/azul/images/tiles/Red.jpg"),
+    Orange(3, "data/azul/images/tiles/Orange.jpg"),
+    Blue(4, "data/azul/images/tiles/Blue.jpg");
 
+    final int colorCode;
     final String imagePath;
 
-    AzulTile(){ this.imagePath =null;}
+    AzulTile(int colorCode){
+        this.colorCode = colorCode;
+        this.imagePath =null;
+    }
 
-    AzulTile(String imagePath) {
+    AzulTile(int colorCode, String imagePath) {
+        this.colorCode = colorCode;
         this.imagePath = imagePath;
     }
 
 //    public String getColor(){ return this.name(); }
+
+    public int getColorCode() { return colorCode; }
 
     public String getImagePath() {
         return imagePath;
