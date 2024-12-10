@@ -87,19 +87,22 @@ public class AzulFactoryBoard extends Component {
 
         System.out.println("Factory: " + selectedTiles);
 
-        //something is going wrong around here
+
         for (int i = 0; i < selectedTiles.size(); i++) {
             int count = 0;
             for (int j = i+1; j < selectedTiles.size(); j++) {
                 if (selectedTiles.get(i).equals(selectedTiles.get(j))) {
-                    if (tilesPicked.contains(selectedTiles.get(i))) {return; }
+                    if (tilesPicked.contains(selectedTiles.get(i))) return;
                     if (count == 0) count++;
                     count++;
-                    tilesPicked.add(selectedTiles.get(i));
                 }
             }
-            if (count == 0 && !tilesPicked.contains(selectedTiles.get(i))) count++;
-//            this.factoryBoard[selectedTiles.get(i)][1] = count;
+
+            if (tilesPicked.contains(selectedTiles.get(i))) continue;
+            tilesPicked.add(selectedTiles.get(i));
+
+            if (count == 0) count++;
+
             AzulTile selected = selectedTiles.get(i);
 
             switch (selected) {
