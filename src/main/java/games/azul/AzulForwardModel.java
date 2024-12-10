@@ -6,10 +6,13 @@ import core.actions.AbstractAction;
 import core.components.GridBoard;
 import games.azul.components.AzulFactoryBoard;
 import games.azul.components.AzulPlayerBoard;
+import games.azul.gui.AzulFactoryBoardManager;
 import gametemplate.actions.GTAction;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static games.azul.AzulGameState.AzulPhase.*;
 
 /**
  * <p>The forward model contains all the game rules and logic. It is mainly responsible for declaring rules for:</p>
@@ -62,7 +65,11 @@ public class AzulForwardModel extends StandardForwardModel {
             gs.factoryBoards.add(factoryBoard);
         }
 
+        // First state is Factory Offers
+        gs.setGamePhase(FactoryOffer);
+        for (int i=0; i < gs.getNPlayers(); i++) {
 
+        }
 
     }
 

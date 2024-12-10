@@ -109,8 +109,8 @@ public class AzulGUI extends AbstractGUIManager {
         for(int i = 0; i < params.getNFactories(); i++){
             AzulFactoryBoardView factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoard(i), ags);
 
-
             factoryBoards.add(factoryBoard);
+            AzulFactoryBoardManager.register(factoryBoard);
 
         }
 
