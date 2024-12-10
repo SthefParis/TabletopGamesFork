@@ -87,7 +87,6 @@ public class AzulFactoryBoard extends Component {
 
         System.out.println("Factory: " + selectedTiles);
 
-
         for (int i = 0; i < selectedTiles.size(); i++) {
             int count = 0;
             for (int j = i+1; j < selectedTiles.size(); j++) {
@@ -98,6 +97,7 @@ public class AzulFactoryBoard extends Component {
                 }
             }
 
+            // If selected tile is in tiles picked, value in factoryBoard should not change
             if (tilesPicked.contains(selectedTiles.get(i))) continue;
             tilesPicked.add(selectedTiles.get(i));
 
@@ -107,9 +107,9 @@ public class AzulFactoryBoard extends Component {
 
             switch (selected) {
                 case White: this.factoryBoard[0][1] = count; break;
-                case Orange: this.factoryBoard[1][1] = count; break;
+                case Black: this.factoryBoard[1][1] = count; break;
                 case Red: this.factoryBoard[2][1] = count; break;
-                case Black: this.factoryBoard[3][1] = count; break;
+                case Orange: this.factoryBoard[3][1] = count; break;
                 case Blue: this.factoryBoard[4][1] = count; break;
             }
         }
