@@ -107,6 +107,7 @@ public class AzulGUI extends AbstractGUIManager {
 
         // Factory in the center
         for(int i = 0; i < params.getNFactories(); i++){
+            System.out.println("Number of factories: " + params.getNFactories());
             AzulFactoryBoardView factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoard(i), ags);
 
             factoryBoards.add(factoryBoard);

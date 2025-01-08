@@ -33,7 +33,7 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
 
 
     public AzulPlayerBoardView(AzulPlayerBoard azulPlayerBoard, AzulGameState gs) {
-        super(null, 0, 0);
+        super(null, 0, 0); //What goes in c??
         this.gs = gs;
 
         rects = new Rectangle[azulPlayerBoard.playerBoard.length*azulPlayerBoard.playerTempBoard.length];
@@ -50,6 +50,8 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
                         if (r != null && r.contains(e.getPoint())) {
                             highlight.clear();
                             highlight.add(r);
+
+                            repaint();
                             break;
                         }
                     }
@@ -126,7 +128,7 @@ public class AzulPlayerBoardView extends ComponentView implements IScreenHighlig
 
     // Draws Pattern Line from right to left
     private void drawPlayerTempBoard(Graphics2D g, AzulPlayerBoard tempBoard, int x, int y) {
-        System.out.println("Printing temp board");
+//        System.out.println("Printing temp board");
         for (int i = 0; i < azulPlayerBoard.playerTempBoard.length; i++) {
             // Calculate the starting x-coordinate for the current row (right-aligned)
             int startX = x + (5 - 1 - i) * GUI.defaultItemSize/2;

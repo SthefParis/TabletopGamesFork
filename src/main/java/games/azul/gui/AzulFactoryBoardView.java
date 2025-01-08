@@ -5,6 +5,7 @@ import games.azul.AzulGameState;
 import games.azul.components.AzulFactoryBoard;
 import gui.IScreenHighlight;
 import gui.views.ComponentView;
+import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -22,9 +23,12 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
     ArrayList<Rectangle> highlight;
 
     AzulFactoryBoard azulFactory;
+    int[] onlyTiles;
 
     int offsetX = 10;
     int offsetY = 10;
+
+    private Map<Rectangle, Integer> rectToColorMap = new HashMap();
 
     public AzulFactoryBoardView(AzulFactoryBoard azulFactory, AzulGameState gs) {
         super(null, 0,0);
@@ -44,6 +48,11 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
                             highlight.clear();
                             highlight.add(r);
 
+                            // Fetch and print color of the clicked cell
+                            Integer colorCode = rectToColorMap.get(r);
+                            String colorName = getColorName(colorCode);
+                            System.out.println("Clicked cell color: " + colorName);
+
                             AzulFactoryBoardManager.clearAllHighlights(AzulFactoryBoardView.this);
                             repaint();
                             break;
@@ -55,6 +64,36 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
                 }
             }
         });
+
+//        addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if (e.getButton() == MouseEvent.BUTTON1) {
+//                    for (int i = 0; i< rects.length; i++) {
+//                        Rectangle r = rects[i];
+//                        if (r != null && r.contains(e.getPoint())) {
+//                            int selectedColor = onlyTiles[i];
+//
+//                            highlight.clear();
+//                            for (int j = 0; j < rects.length; j++){
+//                                if (onlyTiles[j] == selectedColor) {
+//                                    highlight.add(rects[j]);
+//                                }
+//                            }
+//
+//                            AzulFactoryBoardManager.clearAllHighlights(AzulFactoryBoardView.this);
+//                            repaint();
+//                            break;
+//                        }
+//                    }
+//                }
+//
+//                else{
+//                    highlight.clear();
+//                    repaint();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -72,15 +111,25 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
             g.drawRect(r.x, r.y, r.width, r.height);
             g.setStroke(s);
         }
+//        if (!highlight.isEmpty()) {
+//            g.setColor(Color.GREEN);
+//            Stroke s = g.getStroke();
+//            g.setStroke(new BasicStroke(3));
+//
+//            for (Rectangle r : highlight) {
+//                g.drawRect(r.x, r.y, r.width, r.height);
+//            }
+//
+//            g.setStroke(s);
+//        }
     }
 
     private void drawFactoryBoard(Graphics2D g, AzulFactoryBoard azulFactory, int x, int y) {
 //        int width = gridBoard.getWidth() * defaultItemSize;
 //        int height = gridBoard.getHeight() * defaultItemSize;
-        System.out.println("Drawing factory board");
+//        System.out.println("Drawing factory board");
         int numRows = 1;
         int numColumns = 4;
-        int[] onlyTiles;
 
 
         for (int i=0; i < numRows; i++) {
@@ -94,7 +143,9 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
                     drawCell(g, onlyTiles, j, xC, yC);
 
                     if (rects[index] == null) {
-                        rects[index] = new Rectangle(xC, yC, defaultItemSize/2, defaultItemSize/2);
+                        Rectangle rect = new Rectangle(xC, yC, defaultItemSize / 2, defaultItemSize / 2);
+                        rects[index] = rect;
+                        rectToColorMap.put(rect, onlyTiles[j]); // Map rectangle to tile color
 
                     }
                 }
@@ -156,6 +207,7 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
             tiles[i] = tileList.get(i);
         }
 
+//        System.out.println("Tiles in factory: " + Arrays.toString(tiles));
         return tiles;
     }
 
@@ -194,7 +246,50 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
         }
     }
 
+//    public String getSelectedTileColor(){
+//        int selectedTile = getSelectedTile();
+//        if (selectedTile == -1) {
+//            return "empty";
+//        }
+//
+//        switch (selectedTile) {
+//            case 0: return "white";
+//            case 1: return "black";
+//            case 2: return "red";
+//            case 3: return "orange";
+//            case 4: return "blue";
+//            default: return "empty";
+//        }
+//    }
+//
+//    public int getSelectedTile() {
+//        if (highlight.isEmpty()) return -1;
+//
+//        Rectangle selected = highlight.get(0);
+//
+//        for (int i = 0; i < rects.length; i++) {
+//            if (rects[i] != null && rects[i].equals(selected)) {
+//                System.out.println(azulFactory.factoryBoard[i][0]);
+//                return azulFactory.factoryBoard[i][0];
+//            }
+//        }
+//        return -1;
+//    }
+
+    private String getColorName(int colorCode) {
+        switch (colorCode) {
+            case 0: return "white";
+            case 1: return "black";
+            case 2: return "red";
+            case 3: return "orange";
+            case 4: return "blue";
+            default: return "empty";
+        }
+    }
+
+
     public ArrayList<Rectangle> getHighlight() { return highlight; }
+
 
     @Override
     public void clearHighlights() { highlight.clear(); }

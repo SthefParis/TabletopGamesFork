@@ -1,8 +1,10 @@
 package games.azul;
 
 import core.AbstractGameState;
+import core.CoreConstants;
 import core.StandardForwardModel;
 import core.actions.AbstractAction;
+import core.actions.ActionSpace;
 import core.components.GridBoard;
 import games.azul.components.AzulFactoryBoard;
 import games.azul.components.AzulPlayerBoard;
@@ -73,15 +75,35 @@ public class AzulForwardModel extends StandardForwardModel {
 
     }
 
+
     /**
      * Calculates the list of currently available actions, possibly depending on the game phase.
      * @return - List of AbstractAction objects.
      */
     @Override
     protected List<AbstractAction> _computeAvailableActions(AbstractGameState gameState) {
-        List<AbstractAction> actions = new ArrayList<>();
-        // TODO: create action classes for the current player in the given game state and add them to the list. Below just an example that does nothing, remove.
-        actions.add(new GTAction());
+        return _computeAvailableActions(gameState, ActionSpace.Default);
+    }
+
+    @Override
+    protected List<AbstractAction> _computeAvailableActions(AbstractGameState gameState, ActionSpace space) {
+        AzulGameState ags = (AzulGameState) gameState;
+        AzulParameters params = (AzulParameters) gameState.getGameParameters();
+        ArrayList<AbstractAction> actions = new ArrayList<>();
+
+        int player = ags.getCurrentPlayer();
+
+
+
+        return actions;
+    }
+
+
+
+    private ArrayList<AbstractAction> playerActions(AzulGameState ags, int playerId){
+        ArrayList<AbstractAction> actions = new ArrayList<>();
+        List<AzulFactoryBoard> factoryBoards = ags.getFactoryBoards();
+
         return actions;
     }
 }
