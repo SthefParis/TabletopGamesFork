@@ -6,6 +6,7 @@ import core.Game;
 import games.azul.AzulGameState;
 import games.azul.AzulParameters;
 import games.azul.components.AzulFactoryBoard;
+import games.terraformingmars.gui.TMGUI;
 import gui.AbstractGUIManager;
 import gui.GamePanel;
 import gui.IScreenHighlight;
@@ -37,8 +38,13 @@ import java.util.List;
 public class AzulGUI extends AbstractGUIManager {
 
     // Settings for display areas
-    final static int playerAreaWidth = 500;
-    final static int playerAreaHeight = 200;
+    final static int playerAreaWidth = 400;
+    final static int playerAreaHeight = 300;
+
+    static int fontSize = 16;
+    static Font defaultFont = new Font("Prototype", Font.BOLD, fontSize);
+    static Color defaultFontColor = Color.BLACK;
+    static Color bgColor = Color.WHITE;
 
     // Factory board views
     private List<AzulFactoryBoardView> factoryBoards;
@@ -56,6 +62,8 @@ public class AzulGUI extends AbstractGUIManager {
         if (game == null) return;
         AbstractGameState gs = game.getGameState();
         if (gs == null) return;
+
+        parent.setBackground(bgColor);
 
         activePlayer = gs.getCurrentPlayer();
 
@@ -84,20 +92,22 @@ public class AzulGUI extends AbstractGUIManager {
             AzulPlayerBoardView playerBoard = new AzulPlayerBoardView(ags.getPlayerBoard(i), ags);
 
             // Get agent name
-            String[] split = game.getPlayers().get(0).getClass().toString().split("\\.");
+            String[] split = game.getPlayers().get(i).getClass().toString().split("\\.");
             String agentName = split[split.length - 1];
 
             // Create border, layouts and keep track of this view
-            TitledBorder title = BorderFactory.createTitledBorder(
-                    BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Player " + i + " [" + agentName + "]",
-                    TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM
+            Border title = BorderFactory.createTitledBorder(
+                    BorderFactory.createLineBorder(Color.BLACK, 1),
+                    "Player " + i + " [" + agentName + "]",
+                    TitledBorder.CENTER,
+                    TitledBorder.BELOW_BOTTOM
             );
 
             playerViewBorders[i] = title;
             playerBoard.setBorder(title);
             playerBoard.setPreferredSize(new Dimension(playerAreaWidth, playerAreaHeight));
-            sides[next].setLayout(new BoxLayout(sides[next], BoxLayout.Y_AXIS));
             sides[next].add(playerBoard);
+            sides[next].setLayout(new GridBagLayout());
             next = (next + 1) % (locations.length);
             playerBoards.add(playerBoard);
         }
@@ -105,39 +115,69 @@ public class AzulGUI extends AbstractGUIManager {
             mainGameArea.add(sides[i], locations[i]);
         }
 
-        // Factory in the center
-        for(int i = 0; i < params.getNFactories(); i++){
-            System.out.println("Number of factories: " + params.getNFactories());
-            AzulFactoryBoardView factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoard(i), ags);
+//        // Factory in the center
+//        for(int i = 0; i < params.getNFactories(); i++){
+//            System.out.println("Number of factories: " + params.getNFactories());
+//            AzulFactoryBoardView factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoard(i), ags);
+//
+//            factoryBoards.add(factoryBoard);
+//            AzulFactoryBoardManager.register(factoryBoard);
+//        }
 
-            factoryBoards.add(factoryBoard);
-            AzulFactoryBoardManager.register(factoryBoard);
+//        JPanel centerArea = new JPanel();
+//        centerArea.setLayout(new BoxLayout(centerArea, BoxLayout.X_AXIS));
+//
+//        for (int i=0; i < params.getNFactories(); i++) {
+//            centerArea.add(factoryBoards.get(i));
+//        }
 
-        }
+//        JPanel jp = new JPanel();
+//        jp.setLayout(new GridBagLayout());
+//        jp.add(centerArea);
+//        mainGameArea.add(jp, BorderLayout.CENTER);
 
-        JPanel centerArea = new JPanel();
-        centerArea.setLayout(new BoxLayout(centerArea, BoxLayout.Y_AXIS));
-
-        for (int i=0; i < params.getNFactories(); i++) {
-            centerArea.add(factoryBoards.get(i));
-        }
-////        factoryBoard = new AzulFactoryBoardView(ags.getFactoryBoards(),ags);
-//        centerArea.add(factoryBoard);
-////        JPanel jp = new JPanel();
-//////        jp.setLayout(new GridBagLayout());
-//////        jp.add(centerArea);
-        mainGameArea.add(centerArea, BorderLayout.CENTER);
+//        mainGameArea.add(centerArea, BorderLayout.CENTER);
 
         // Top area will show state information
+        // Top area will show state information
         JPanel infoPanel = createGameStateInfoPanel("Azul", gs, width, defaultInfoPanelHeight);
-        // Bottom area will show actions available
-        JComponent actionPanel = createActionPanel(new IScreenHighlight[0], width, defaultActionPanelHeight, false, true, null, null, null);
 
+        ////Bottom area will show actions available
+//        JLabel actionLabel = new JLabel("Actions: ");
+//        actionLabel.setFont(defaultFont);
+//        actionLabel.setForeground(defaultFontColor);
+//        actionLabel.setOpaque(false);
+
+        JComponent actionPanel = createActionPanel(new IScreenHighlight[0], width, defaultActionPanelHeight/2, false, true, null, null, null);
+//        JPanel actionWrapper = new JPanel();
+//        actionWrapper.add(actionLabel);
+//        actionWrapper.add(actionPanel);
+//        actionWrapper.setOpaque(false);
+
+//        JTabbedPane tabs = new TMGUI.SeeThroughTabbedPane();
+//        tabs.setForeground(defaultFontColor);
+//        tabs.setFont(defaultFont);
+//        tabs.setBackground(Color.white);
+//        tabs.setOpaque(false);
+
+//        JPanel gameWrapper = new JPanel();
+//        gameWrapper.setOpaque(false);
+//        JPanel gamePanel = new JPanel();
+//        gamePanel.setOpaque(false);
+//        gamePanel.setLayout(new BoxLayout(gamePanel, BoxLayout.Y_AXIS));
+//        gamePanel.add(mainGameArea);
+//        gamePanel.add(actionWrapper);
+//        gameWrapper.add(gamePanel);
+//        tabs.add("Game", gameWrapper);
+
+
+        // Add all views to frame
         // Add all views to frame
         parent.setLayout(new BorderLayout());
         parent.add(mainGameArea, BorderLayout.CENTER);
         parent.add(infoPanel, BorderLayout.NORTH);
         parent.add(actionPanel, BorderLayout.SOUTH);
+//        parent.add(actionWrapper, BorderLayout.SOUTH);
 
         parent.revalidate();
         parent.setVisible(true);

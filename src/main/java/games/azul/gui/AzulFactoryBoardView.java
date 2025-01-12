@@ -65,35 +65,6 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
             }
         });
 
-//        addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                if (e.getButton() == MouseEvent.BUTTON1) {
-//                    for (int i = 0; i< rects.length; i++) {
-//                        Rectangle r = rects[i];
-//                        if (r != null && r.contains(e.getPoint())) {
-//                            int selectedColor = onlyTiles[i];
-//
-//                            highlight.clear();
-//                            for (int j = 0; j < rects.length; j++){
-//                                if (onlyTiles[j] == selectedColor) {
-//                                    highlight.add(rects[j]);
-//                                }
-//                            }
-//
-//                            AzulFactoryBoardManager.clearAllHighlights(AzulFactoryBoardView.this);
-//                            repaint();
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                else{
-//                    highlight.clear();
-//                    repaint();
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -111,33 +82,18 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
             g.drawRect(r.x, r.y, r.width, r.height);
             g.setStroke(s);
         }
-//        if (!highlight.isEmpty()) {
-//            g.setColor(Color.GREEN);
-//            Stroke s = g.getStroke();
-//            g.setStroke(new BasicStroke(3));
-//
-//            for (Rectangle r : highlight) {
-//                g.drawRect(r.x, r.y, r.width, r.height);
-//            }
-//
-//            g.setStroke(s);
-//        }
     }
 
     private void drawFactoryBoard(Graphics2D g, AzulFactoryBoard azulFactory, int x, int y) {
-//        int width = gridBoard.getWidth() * defaultItemSize;
-//        int height = gridBoard.getHeight() * defaultItemSize;
-//        System.out.println("Drawing factory board");
         int numRows = 1;
         int numColumns = 4;
-
 
         for (int i=0; i < numRows; i++) {
             for (int j=0; j < numColumns; j++){
                 int index = i * numColumns + j; // Checks that index is within list bound
                 if (index < azulFactory.factoryBoard.length) {
                     int xC = x + j * defaultItemSize/2; // Calculates x-coordinate
-                    int yC = y + i * defaultItemSize/2; // Calculates y-coordinate
+                    int yC = y + i * defaultItemSize/4; // Calculates y-coordinate
                     onlyTiles = getTiles(azulFactory.factoryBoard);
 
                     drawCell(g, onlyTiles, j, xC, yC);
@@ -151,38 +107,10 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
                 }
             }
         }
-        // Draw cells
-//        for (int i=0; i < azulFactoryList.getHeight(); i++){
-//            for(int j=0; j < azulFactoryList.getWidth(); j++){
-//                int xC = x + j * defaultItemSize;
-//                int yC = y + i * defaultItemSize;
-//                drawCell(g, azulFactoryList.getElement(j, i), xC, yC);
-//
-//                // Save rect where cell is drawn
-//                int idx = i * azulFactoryList.getWidth() + j;
-//                if (rects[idx] == null) {
-//                    rects[idx] = new Rectangle(xC, yC, defaultItemSize, defaultItemSize);
-//                }
-//            }
-//        }
     }
 
     private int[] getTiles(int[][] factory){
         List<Integer> tileList = new ArrayList<>();
-//        List<int> tile
-
-//        for (int[] ints : factory) {
-//            if (ints[1] > 0) {
-//                if (ints[1] > 1) {
-//                    for (int j = 0; j < ints[1]; j++) {
-//                        tileList.add(ints[0]);
-//                    }
-//                } else {
-//                    tileList.add(ints[0]);
-//                }
-//
-//            }
-//        }
 
         for (int i = 0; i < factory.length; i++) {
             if (factory[i][1] > 0) {
@@ -245,36 +173,6 @@ public class AzulFactoryBoardView extends ComponentView implements IScreenHighli
             g.drawString("Empty", textX, textY);
         }
     }
-
-//    public String getSelectedTileColor(){
-//        int selectedTile = getSelectedTile();
-//        if (selectedTile == -1) {
-//            return "empty";
-//        }
-//
-//        switch (selectedTile) {
-//            case 0: return "white";
-//            case 1: return "black";
-//            case 2: return "red";
-//            case 3: return "orange";
-//            case 4: return "blue";
-//            default: return "empty";
-//        }
-//    }
-//
-//    public int getSelectedTile() {
-//        if (highlight.isEmpty()) return -1;
-//
-//        Rectangle selected = highlight.get(0);
-//
-//        for (int i = 0; i < rects.length; i++) {
-//            if (rects[i] != null && rects[i].equals(selected)) {
-//                System.out.println(azulFactory.factoryBoard[i][0]);
-//                return azulFactory.factoryBoard[i][0];
-//            }
-//        }
-//        return -1;
-//    }
 
     private String getColorName(int colorCode) {
         switch (colorCode) {

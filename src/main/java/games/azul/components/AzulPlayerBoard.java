@@ -17,6 +17,8 @@ import games.azul.tiles.AzulTile;
 public class AzulPlayerBoard extends Component {
     public AzulTile[][] playerBoard; // Refers to Wall
     public AzulTile[][] playerTempBoard; // Refers to Pattern Lines
+    public AzulTile[] playerScoreTrack; // Refers to the score track
+    public AzulTile[] playerFloorLine; // Refers to the floor line
 
     public AzulPlayerBoard() {
         super(CoreConstants.ComponentType.BOARD, "AzulPlayerBoard");
@@ -28,8 +30,13 @@ public class AzulPlayerBoard extends Component {
 
     public void initialise(AzulGameState gs){
         int boardSize = ((AzulParameters) gs.getGameParameters()).getBoardSize();
+        int scoreTrackSize = ((AzulParameters) gs.getGameParameters()).getScoreTrackLength();
+        int floorLineSize = ((AzulParameters) gs.getGameParameters()).getFloorLineLength();
+
         this.playerBoard = new AzulTile[boardSize][boardSize];
         this.playerTempBoard = new AzulTile[boardSize][];
+        this.playerScoreTrack = new AzulTile[scoreTrackSize];
+        this.playerFloorLine = new AzulTile[floorLineSize];
 
         for(int i = 0; i < boardSize; i++){
             playerTempBoard[i] = new AzulTile[i+1];

@@ -6,11 +6,13 @@ import core.StandardForwardModel;
 import core.actions.AbstractAction;
 import core.actions.ActionSpace;
 import core.components.GridBoard;
+import games.azul.actions.PickUpTilesAction;
 import games.azul.components.AzulFactoryBoard;
 import games.azul.components.AzulPlayerBoard;
 import games.azul.gui.AzulFactoryBoardManager;
 import gametemplate.actions.GTAction;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,9 +91,11 @@ public class AzulForwardModel extends StandardForwardModel {
     protected List<AbstractAction> _computeAvailableActions(AbstractGameState gameState, ActionSpace space) {
         AzulGameState ags = (AzulGameState) gameState;
         AzulParameters params = (AzulParameters) gameState.getGameParameters();
-        ArrayList<AbstractAction> actions = new ArrayList<>();
+        ArrayList<AbstractAction> actions;
 
         int player = ags.getCurrentPlayer();
+
+        actions = playerActions(ags, player);
 
 
 
@@ -99,10 +103,11 @@ public class AzulForwardModel extends StandardForwardModel {
     }
 
 
-
     private ArrayList<AbstractAction> playerActions(AzulGameState ags, int playerId){
         ArrayList<AbstractAction> actions = new ArrayList<>();
         List<AzulFactoryBoard> factoryBoards = ags.getFactoryBoards();
+
+        actions.add(new PickUpTilesAction(1, false));
 
         return actions;
     }

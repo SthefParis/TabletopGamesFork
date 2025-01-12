@@ -50,6 +50,59 @@ public class AzulFactoryBoard extends Component {
     }
 
     public void refill() {
+//        public void refill() {
+//            AzulParameters params = new AzulParameters();
+//            HashMap<AzulTile, Integer> tileCounts = params.tileCounts;
+//
+//            List<AzulTile> selectedTiles = new ArrayList<>();
+//            Random random = new Random();
+//
+//            // Reset factoryBoard
+//            this.factoryBoard = new int[][]{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}};
+//
+//            while (selectedTiles.size() < 4) {
+//                // Filter and collect available tiles
+//                List<AzulTile> availableTiles = tileCounts.entrySet().stream()
+//                        .filter(entry -> entry.getValue() > 0)
+//                        .map(Map.Entry::getKey)
+//                        .collect(Collectors.toList());
+//
+//                if (availableTiles.isEmpty()) break;
+//
+//                // Pick a random tile
+//                AzulTile randomTile = availableTiles.get(random.nextInt(availableTiles.size()));
+//                selectedTiles.add(randomTile);
+//
+//                // Update tileCounts
+//                int currentCount = tileCounts.get(randomTile);
+//                if (currentCount > 0) {
+//                    tileCounts.put(randomTile, currentCount - 1);
+//                }
+//            }
+//
+//            // Populate factoryBoard
+//            for (AzulTile tile : selectedTiles) {
+//                switch (tile) {
+//                    case White:
+//                        factoryBoard[0][1]++;
+//                        break;
+//                    case Black:
+//                        factoryBoard[1][1]++;
+//                        break;
+//                    case Red:
+//                        factoryBoard[2][1]++;
+//                        break;
+//                    case Orange:
+//                        factoryBoard[3][1]++;
+//                        break;
+//                    case Blue:
+//                        factoryBoard[4][1]++;
+//                        break;
+//                }
+//            }
+//
+//            System.out.println("Factory board updated: " + Arrays.deepToString(factoryBoard));
+//            System.out.println("Tile counts updated: " + tileCounts);
         AzulParameters params = new AzulParameters();
         HashMap<AzulTile, Integer> tileCounts = params.tileCounts;
 

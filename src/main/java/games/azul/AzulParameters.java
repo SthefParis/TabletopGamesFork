@@ -27,6 +27,8 @@ public class AzulParameters extends AbstractParameters {
     int maxRounds = 5;
     int maxPoints = 240;
     int nTiles = 5;
+    int nTilesInFloorLine = 7;
+    int nTilesinScoreTrack = 101;
 
     // Tile counts by colour
     public HashMap<AzulTile, Integer> tileCounts = new HashMap<AzulTile, Integer>() {{
@@ -61,6 +63,8 @@ public class AzulParameters extends AbstractParameters {
     public int getColorSetBonusPoints() { return colorSetBonusPoints; }
     public int getAdjacencyBasePoints() { return adjacencyBasePoints; }
     public int[] getFloorPenalties() { return floorPenalties; }
+    public int getScoreTrackLength(){ return nTilesinScoreTrack; }
+    public int getFloorLineLength(){ return nTilesInFloorLine; }
     public int getNTiles() { return nTiles; }
 
     public void initialise(int nPlayers){
